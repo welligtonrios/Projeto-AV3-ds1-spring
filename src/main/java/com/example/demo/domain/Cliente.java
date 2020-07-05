@@ -4,11 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente implements Serializable {
@@ -27,23 +33,27 @@ public class Cliente implements Serializable {
 	private String telefone;
 	private String email;
 	
+	//criar relacionamento Cliente Endereco
 	@OneToMany(mappedBy = "cliente") // mapeamento realizado na classe endereco atributo cliente
 	private List<Endereco> endereco = new ArrayList<>();
 	
-	//criar relacionamento
+	//criar relacionamento Cliente Conta
+	//um cliente para uma conta
+	@OneToOne
 	private Conta conta;
-
+	
+	
 	public Cliente() {
 		
 	}
 
-	public Cliente(Integer id, String nome, String telefone, String email) {
+	public Cliente(Integer id, String nome, String telefone, String email, Conta conta) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
-		
+		this.conta = conta;
 	}
 
 	public Integer getId() {

@@ -2,12 +2,14 @@ package com.example.demo.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +31,19 @@ public class Conta implements Serializable {
 
 	// conta tem uma categoria
 	//Na tabela Conta em tenho uma coluna que guardara o id da Categoria
+	//muitas contas para categoria
 	@ManyToOne
 	@JsonIgnore // eu nao preciso ficar renderizando o objeto conta, e sim o obj categoria com a lista de contas
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
-
+	
+	//realiconameno Conta Cliente
+	// é representado na classe cliente pelo atributo conta
+	@JsonIgnore // 
+	@OneToOne(mappedBy = "conta") //mapeamento realizado na tabela cliente 
+	private Cliente cliente;
+	
+	
 	public Conta() {
 
 	}
@@ -86,6 +96,15 @@ public class Conta implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 
 	@Override
 	public int hashCode() {
