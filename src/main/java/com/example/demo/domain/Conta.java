@@ -1,14 +1,16 @@
 package com.example.demo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,6 +45,9 @@ public class Conta implements Serializable {
 	@OneToOne(mappedBy = "conta") //mapeamento realizado na tabela cliente 
 	private Cliente cliente;
 	
+	//uma conta tem muitos cartões
+	@OneToMany(mappedBy = "conta") // o mapeamento foi feito na classe Cartão atributo conta
+	private List<Cartão> cartões = new ArrayList<>();
 	
 	public Conta() {
 
@@ -105,6 +110,14 @@ public class Conta implements Serializable {
 		this.cliente = cliente;
 	}
 	
+
+	public List<Cartão> getCartões() {
+		return cartões;
+	}
+
+	public void setCartões(List<Cartão> cartões) {
+		this.cartões = cartões;
+	}
 
 	@Override
 	public int hashCode() {
