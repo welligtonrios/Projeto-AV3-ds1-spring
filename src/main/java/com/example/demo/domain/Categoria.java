@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Categoria implements Serializable {
 
@@ -24,7 +26,7 @@ public class Categoria implements Serializable {
 	private String nome;
 	
 	//relacionamento Categoria conta 
-	//e digo que o mapeamento foi feito na Classe conta no atributo categoria
+	//e digo que o mapeamento foi feito na Classe conta no atributo categoria A CLASSE CONTA É A CLASSE DOMINANTE
 	@OneToMany(mappedBy = "categoria")
 	private List<Conta> contas = new ArrayList<>();
 	

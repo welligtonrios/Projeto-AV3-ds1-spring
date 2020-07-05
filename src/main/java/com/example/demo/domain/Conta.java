@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Conta implements Serializable {
 
@@ -28,6 +30,7 @@ public class Conta implements Serializable {
 	// conta tem uma categoria
 	//Na tabela Conta em tenho uma coluna que guardara o id da Categoria
 	@ManyToOne
+	@JsonIgnore // eu nao preciso ficar renderizando o objeto conta, e sim o obj categoria com a lista de contas
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 

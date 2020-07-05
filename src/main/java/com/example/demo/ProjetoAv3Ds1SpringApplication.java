@@ -28,9 +28,9 @@ public class ProjetoAv3Ds1SpringApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Categoria cat1 = new Categoria(null, "Conta Poupança");
-		Categoria cat2 = new Categoria(null, "Conta Salario");
-		Categoria cat3 = new Categoria(null, "Conta Digital");
+		Categoria cat1 = new Categoria(null, "bronze");
+		Categoria cat2 = new Categoria(null, "silver");
+		Categoria cat3 = new Categoria(null, "gold");
 		
 		//aqui as contas conhece sua categoria
 		Conta cont1 = new Conta(null,100,200.00,true,cat1); // conta poupança
@@ -44,7 +44,10 @@ public class ProjetoAv3Ds1SpringApplication implements CommandLineRunner{
 		cat3.getContas().addAll(Arrays.asList(cont2,cont3));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
+		
 		contaRepository.saveAll(Arrays.asList(cont1,cont2,cont3,cont4)); // Salvando a conta no banco
+	
+		
 		
 		
 		
