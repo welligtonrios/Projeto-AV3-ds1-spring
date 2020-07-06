@@ -1,7 +1,9 @@
 package com.example.demo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +41,13 @@ public class Cartão implements Serializable{
 	@ManyToOne// muitos cartões para uma conta
 	@JoinColumn(name ="conta_id")
 	private Conta conta;
+	
+	
+	//relacionameto Cartão fatura
+	
+	@OneToMany(mappedBy = "cartão")//mapeamento realizado na classe fatura
+	private List<Faturas> fatura = new ArrayList<>();
+	
 	
 	public Cartão() {
 		
@@ -109,6 +119,15 @@ public class Cartão implements Serializable{
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+	
+
+	public List<Faturas> getFatura() {
+		return fatura;
+	}
+
+	public void setFatura(List<Faturas> fatura) {
+		this.fatura = fatura;
 	}
 
 	@Override

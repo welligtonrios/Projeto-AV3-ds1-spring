@@ -14,11 +14,14 @@ import com.example.demo.domain.Categoria;
 import com.example.demo.domain.Cliente;
 import com.example.demo.domain.Conta;
 import com.example.demo.domain.Endereco;
+import com.example.demo.domain.Faturas;
+import com.example.demo.domain.enums.Total;
 import com.example.demo.repositories.CartãoRepository;
 import com.example.demo.repositories.CategoriaRepository;
 import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.repositories.ContaRepository;
 import com.example.demo.repositories.EnderecoRepository;
+import com.example.demo.repositories.FaturaRepository;
 
 @SpringBootApplication
 public class ProjetoAv3Ds1SpringApplication implements CommandLineRunner {
@@ -37,6 +40,9 @@ public class ProjetoAv3Ds1SpringApplication implements CommandLineRunner {
 	
 	@Autowired
 	CartãoRepository cartãoRepository;
+	
+	@Autowired
+	FaturaRepository faturaRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoAv3Ds1SpringApplication.class, args);
@@ -87,9 +93,9 @@ public class ProjetoAv3Ds1SpringApplication implements CommandLineRunner {
 		
 		//Criando cartão
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm");
-		Cartão cartão1 = new Cartão(null,0000000000000000,sdf.parse("17/06/2020 21:10"),"Zé", 032,"12345", cont4);
-		Cartão cartão2 = new Cartão(null,0000000000000000,sdf.parse("17/06/2020 21:10"),"Maria", 032,"12345", cont2);
-		Cartão cartão3 = new Cartão(null,0000000000000000,sdf.parse("17/06/2020 21:10"),"José", 032,"12345", cont1);
+		Cartão cartão1 = new Cartão(null,0000000000000000,sdf.parse("17/06/2027 21:10"),"Zé", 032,"12345", cont4);
+		Cartão cartão2 = new Cartão(null,0000000000000000,sdf.parse("17/06/2027 21:10"),"Maria", 032,"12345", cont2);
+		Cartão cartão3 = new Cartão(null,0000000000000000,sdf.parse("17/06/2027 21:10"),"José", 032,"12345", cont1);
 		
 		//Passando o cartão para Conta (conta conhece cartão)
 		
@@ -99,16 +105,28 @@ public class ProjetoAv3Ds1SpringApplication implements CommandLineRunner {
 		
 		cartãoRepository.saveAll(Arrays.asList(cartão1,cartão2,cartão3));
 		
+		Total total = new Total();
+	
+		//Criando faturas
+		Faturas f1 = new Faturas(null,sdf.parse("30/07/2020 21:10"),sdf.parse("10/08/2020 21:10"),0.0,true,500.00,cartão1);
+		Faturas f2 = new Faturas(null,sdf.parse("30/06/2020 21:10"),sdf.parse("10/06/2020 21:10"),0.0,false,500.00,cartão1);
+		Faturas f3 = new Faturas(null,sdf.parse("30/05/2020 21:10"),sdf.parse("10/05/2020 21:10"),0.0,false,500.00,cartão1);
 		
+		Faturas f6 = new Faturas(null,sdf.parse("30/07/2020 21:10"),sdf.parse("10/08/2020 21:10"),0.0,true,500.00,cartão2);
+		Faturas f4 = new Faturas(null,sdf.parse("30/06/2020 21:10"),sdf.parse("10/06/2020 21:10"),0.0,false,500.00,cartão2);
+		Faturas f5 = new Faturas(null,sdf.parse("30/05/2020 21:10"),sdf.parse("10/05/2020 21:10"),0.0,false,500.00,cartão2);
 		
+		Faturas f7 = new Faturas(null,sdf.parse("30/07/2020 21:10"),sdf.parse("10/08/2020 21:10"),0.0,true,500.00,cartão3);
+		Faturas f8 = new Faturas(null,sdf.parse("30/06/2020 21:10"),sdf.parse("10/06/2020 21:10"),0.0,false,500.00,cartão3);
+		Faturas f9 = new Faturas(null,sdf.parse("30/05/2020 21:10"),sdf.parse("10/05/2020 21:10"),0.0,false,500.00,cartão3);
 		
+		faturaRepository.saveAll(Arrays.asList(f1,f2,f3,f4,f5,f6,f7,f8,f9));  
 		
+		//add faturas ao cartão
 		
-		
-		
-		
-		
-		
+		cartão1.getFatura().addAll(Arrays.asList(f1,f2,f3));
+		cartão2.getFatura().addAll(Arrays.asList(f4,f5,f6));
+		cartão3.getFatura().addAll(Arrays.asList(f7,f8,f9));
 		
 		
 		
